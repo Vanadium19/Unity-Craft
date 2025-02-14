@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GameContext
+  - GameInstaller
   layers:
   - Default
   - TransparentFX
@@ -15,11 +17,11 @@ TagManager:
   - 
   - 
   - 
+  - Character
+  - Enemy
   - 
-  - 
-  - 
-  - 
-  - 
+  - EnemyBullet
+  - PlayerBullet
   - 
   - 
   - 
