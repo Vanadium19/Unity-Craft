@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Leopotam.EcsLite
@@ -6,7 +7,7 @@ namespace Leopotam.EcsLite
     [DisallowMultipleComponent]
     public class EcsView : MonoBehaviour
     {
-        public virtual string Name => this.name; 
+        public virtual string Name => Regex.Replace(this.name, @"\s*\(\d+\)$", "").Trim(); 
         
         [SerializeField]
         private List<EcsViewInstaller> _installers;
@@ -17,6 +18,11 @@ namespace Leopotam.EcsLite
         private bool _shown;
         private int _entity;
         private EcsWorld _world;
+
+        public EcsPackedEntity GetPackedEntity()
+        {
+            return _world.PackEntity(_entity);
+        }
 
         public void Show(EcsWorld world, int entity)
         {

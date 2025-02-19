@@ -10,9 +10,11 @@ namespace Leopotam.EcsLite
     [DisallowMultipleComponent]
     public sealed class EcsViewPool : MonoBehaviour
     {
-        [SerializeField] private Transform _container;
+        [SerializeField]
+        private Transform _container;
 
-        [SerializeField] private EcsViewCatalog[] _catalogs;
+        [SerializeField]
+        private EcsViewCatalog[] _catalogs;
 
 #if ODIN_INSPECTOR
         [ShowInInspector, ReadOnly, HideInEditorMode]

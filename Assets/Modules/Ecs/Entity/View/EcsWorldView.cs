@@ -9,9 +9,11 @@ namespace Leopotam.EcsLite
     {
         private readonly Dictionary<int, EcsView> _activeViews = new();
 
-        [SerializeField] private Transform _viewport;
+        [SerializeField]
+        private Transform _viewport;
 
-        [SerializeField] private EcsViewPool _viewPool;
+        [SerializeField]
+        private EcsViewPool _viewPool;
 
         private EcsWorld _world;
         private EcsPool<EcsName> _entityNames;
@@ -20,7 +22,7 @@ namespace Leopotam.EcsLite
         private readonly Queue<int> _entitiesToDespawn = new();
 
         private bool _shown;
-
+        
         public void Show(EcsWorld world)
         {
             if (_shown)
@@ -31,13 +33,13 @@ namespace Leopotam.EcsLite
 
             _world = world ?? throw new ArgumentNullException(nameof(world));
             _entityNames = _world.GetPool<EcsName>();
-
+            
             _world.AddEventListener(this);
-
+            
             int[] entities = null;
             int count = _world.GetAllEntities(ref entities);
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) 
                 this.SpawnView(entities[i]);
 
             _shown = true;
@@ -52,13 +54,13 @@ namespace Leopotam.EcsLite
             }
 
             _world.RemoveEventListener(this);
-
+            
             int[] entities = null;
             int count = _world.GetAllEntities(ref entities);
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++) 
                 this.DespawnView(entities[i]);
-
+            
             _world = null;
             _entityNames = null;
             _shown = false;
@@ -71,18 +73,18 @@ namespace Leopotam.EcsLite
         void IEcsWorldEventListener.OnWorldDestroyed(EcsWorld world) => this.Hide();
 
         protected virtual string GetEntityName(int entity) => _entityNames.Get(entity).value;
-
-        private void LateUpdate()
+        
+        public void FixedUpdate()
         {
             if (!_shown)
                 return;
 
-            foreach (int entity in _entitiesToSpawn)
+            foreach (int entity in _entitiesToSpawn) 
                 this.SpawnView(entity);
 
-            foreach (int entity in _entitiesToDespawn)
+            foreach (int entity in _entitiesToDespawn) 
                 this.DespawnView(entity);
-
+            
             _entitiesToSpawn.Clear();
             _entitiesToDespawn.Clear();
         }
@@ -93,7 +95,7 @@ namespace Leopotam.EcsLite
             EcsView view = _viewPool.Rent(name);
             view.transform.parent = _viewport;
             view.Show(_world, entity);
-
+            
             _activeViews.Add(entity, view);
         }
 
