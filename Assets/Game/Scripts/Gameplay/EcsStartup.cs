@@ -1,7 +1,10 @@
 using Game.Context;
 using Game.Context.Inputs;
+using Game.Context.Player;
+using Game.Entities.Core;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game
@@ -13,13 +16,17 @@ namespace Game
         private EcsWorld _world;
         private IEcsSystems _systems;
 
-        void Start()
+        private void Start()
         {
             _world = new EcsWorld();
             _systems = new EcsSystems(_world, _gameData);
             _systems
                 //Input
                 .Add(new InputSystem())
+                .Add(new PlayerMoveController())
+
+                //Game Logic
+                .Add(new MoveSystem())
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
 #endif
@@ -27,13 +34,13 @@ namespace Game
                 .Init();
         }
 
-        void Update()
+        private void Update()
         {
             // process systems here.
             _systems?.Run();
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             if (_systems != null)
             {
@@ -52,6 +59,16 @@ namespace Game
                 _world.Destroy();
                 _world = null;
             }
+        }
+
+        [Button]
+        private void CreateCharacter()
+        {
+            int player = _world.NewEntity();
+
+            _world.GetPool<Position>().Add(player).Value = Vector3.zero;
+            _world.GetPool<MoveDirection>().Add(player);
+            _world.GetPool<MoveSpeed>().Add(player).Value = 3f;
         }
     }
 }
