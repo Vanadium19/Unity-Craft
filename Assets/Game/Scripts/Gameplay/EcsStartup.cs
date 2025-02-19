@@ -1,7 +1,9 @@
+using System;
 using Game.Context;
 using Game.Context.Inputs;
 using Game.Context.Player;
 using Game.Entities.Core;
+using Game.Entities.View;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Sirenix.OdinInspector;
@@ -11,12 +13,14 @@ namespace Game
 {
     sealed class EcsStartup : MonoBehaviour
     {
+        [SerializeField] private EcsWorldView _view;
+
         [SerializeField] private GameData _gameData;
 
         private EcsWorld _world;
         private IEcsSystems _systems;
 
-        private void Start()
+        private void Awake()
         {
             _world = new EcsWorld();
             _systems = new EcsSystems(_world, _gameData);
@@ -27,11 +31,19 @@ namespace Game
 
                 //Game Logic
                 .Add(new MoveSystem())
+                
+                //Rendering:
+                .Add(new TransformViewSystem())
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
 #endif
                 .Inject()
                 .Init();
+        }
+
+        private void Start()
+        {
+            _view.Show(_world);
         }
 
         private void Update()
@@ -69,6 +81,7 @@ namespace Game
             _world.GetPool<Position>().Add(player).Value = Vector3.zero;
             _world.GetPool<MoveDirection>().Add(player);
             _world.GetPool<MoveSpeed>().Add(player).Value = 3f;
+            _world.GetPool<EcsName>().Add(player).value = "Player";
         }
     }
 }
