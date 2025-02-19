@@ -7,7 +7,7 @@ namespace Game.Entities.View
 {
     public sealed class TransformViewSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<Position, Rotation, TransformView>> _filter;
+        private readonly EcsFilterInject<Inc<Position, Rotation, TransformView>> _filter;
 
         public void Run(IEcsSystems systems)
         {

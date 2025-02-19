@@ -19,6 +19,8 @@ namespace Game
         [SerializeField] private EcsWorldView _view;
 
         [SerializeField] private GameData _gameData;
+        
+        [SerializeField] private EcsPrototype _bulletPrefab;
 
         private EcsWorld _world;
         private IEcsSystems _systems;
@@ -38,7 +40,7 @@ namespace Game
 
                 //Game Logic
                 .Add(new PlayerMoveSystem())
-                .Add(new PlayerAttackSystem())
+                .Add(new PlayerAttackSystem(_bulletPrefab))
                 .Add(new MoveSystem())
                 .Add(new RotateSystem())
 
@@ -46,6 +48,7 @@ namespace Game
                 .Add(new TransformViewSystem())
 #if UNITY_EDITOR
                 .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(EcsWorldName.EventWorld))
 #endif
                 .Inject()
                 .Init();

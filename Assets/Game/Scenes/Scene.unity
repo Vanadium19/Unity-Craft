@@ -571,6 +571,8 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
+      IsFire: 0
+  _bulletPrefab: {fileID: 11400000, guid: 78b56f4b6ac32d94bb8ed9c1260821c9, type: 2}
 --- !u!4 &498510480
 Transform:
   m_ObjectHideFlags: 0

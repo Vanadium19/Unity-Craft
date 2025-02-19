@@ -9,7 +9,7 @@ namespace Game.Entities.Core
     {
         private readonly float3 Up = new(0, 1, 0);
 
-        private EcsFilterInject<Inc<RotateDirection, RotationSpeed, Rotation>> _filter;
+        private readonly EcsFilterInject<Inc<RotateDirection, RotationSpeed, Rotation>> _filter;
 
         public void Run(IEcsSystems systems)
         {

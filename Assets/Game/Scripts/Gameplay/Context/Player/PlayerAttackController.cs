@@ -6,8 +6,8 @@ namespace Game.Context.Player
 {
     public class PlayerAttackController : IEcsRunSystem
     {
-        private EcsSharedInject<GameData> _gameData;
-        private EcsFilterInject<Inc<UnitFireRequired>> _filter;
+        private readonly EcsSharedInject<GameData> _gameData;
+        private readonly EcsFilterInject<Inc<UnitFireRequired>> _filter;
 
         public void Run(IEcsSystems systems)
         {

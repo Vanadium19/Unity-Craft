@@ -6,7 +6,7 @@ namespace Game.Entities.Content.Player
 {
     public sealed class PlayerMoveSystem : IEcsRunSystem
     {
-        private EcsFilterInject<Inc<UnitDirection, MoveDirection, RotateDirection>> _filter;
+        private readonly EcsFilterInject<Inc<UnitDirection, MoveDirection, RotateDirection>> _filter;
 
         public void Run(IEcsSystems systems)
         {
