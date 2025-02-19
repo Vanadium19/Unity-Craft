@@ -8,7 +8,7 @@ namespace Game.Context.Player
     public class PlayerMoveController : IEcsRunSystem
     {
         private EcsSharedInject<GameData> _gameData;
-        private EcsFilterInject<Inc<MoveDirection>> _filter;
+        private EcsFilterInject<Inc<UnitDirection>> _filter;
 
         public void Run(IEcsSystems systems)
         {

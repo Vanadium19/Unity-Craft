@@ -77,9 +77,6 @@ namespace Leopotam.EcsLite
             for (int i = 0, count = catalog.Count; i < count; i++)
             {
                 (string key, EcsView value) = catalog.GetPrefab(i);
-                
-                Debug.Log($"Key: {key}, Value: {value}");
-                
                 _prefabs.Add(key, value);
             }
         }

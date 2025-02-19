@@ -2,11 +2,13 @@ using System;
 using Game.Context;
 using Game.Context.Inputs;
 using Game.Context.Player;
+using Game.Entities.Content.Player;
 using Game.Entities.Core;
 using Game.Entities.View;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Game
@@ -30,8 +32,10 @@ namespace Game
                 .Add(new PlayerMoveController())
 
                 //Game Logic
+                .Add(new PlayerMoveSystem())
                 .Add(new MoveSystem())
-                
+                .Add(new RotateSystem())
+
                 //Rendering:
                 .Add(new TransformViewSystem())
 #if UNITY_EDITOR
@@ -78,9 +82,16 @@ namespace Game
         {
             int player = _world.NewEntity();
 
+            _world.GetPool<UnitDirection>().Add(player);
+
             _world.GetPool<Position>().Add(player).Value = Vector3.zero;
             _world.GetPool<MoveDirection>().Add(player);
             _world.GetPool<MoveSpeed>().Add(player).Value = 3f;
+
+            _world.GetPool<Rotation>().Add(player).Value = quaternion.Euler(0, 90, 0);
+            _world.GetPool<RotateDirection>().Add(player);
+            _world.GetPool<RotationSpeed>().Add(player).Value = 3f;
+
             _world.GetPool<EcsName>().Add(player).value = "Player";
         }
     }

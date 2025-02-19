@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1be2420cc64122b3dfa383099380e4, type: 3}
   m_Name: EcsViewCatalog
   m_EditorClassIdentifier: 
-  _prefabs: []
+  _prefabs:
+  - {fileID: 9122179205782519322, guid: bb2a79a0065bfac48a043baa5dfd737a, type: 3}
