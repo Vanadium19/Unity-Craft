@@ -1,4 +1,5 @@
 using System;
+using Game.Common;
 using Game.Context;
 using Game.Context.Inputs;
 using Game.Context.Player;
@@ -26,13 +27,18 @@ namespace Game
         {
             _world = new EcsWorld();
             _systems = new EcsSystems(_world, _gameData);
+
+            _systems.AddWorld(new EcsWorld(), EcsWorldName.EventWorld);
+
             _systems
                 //Input
                 .Add(new InputSystem())
                 .Add(new PlayerMoveController())
+                .Add(new PlayerAttackController())
 
                 //Game Logic
                 .Add(new PlayerMoveSystem())
+                .Add(new PlayerAttackSystem())
                 .Add(new MoveSystem())
                 .Add(new RotateSystem())
 
@@ -47,6 +53,8 @@ namespace Game
 
         private void Start()
         {
+            CreateCharacter();
+
             _view.Show(_world);
         }
 
@@ -83,6 +91,7 @@ namespace Game
             int player = _world.NewEntity();
 
             _world.GetPool<UnitDirection>().Add(player);
+            _world.GetPool<UnitFireRequired>().Add(player);
 
             _world.GetPool<Position>().Add(player).Value = Vector3.zero;
             _world.GetPool<MoveDirection>().Add(player);

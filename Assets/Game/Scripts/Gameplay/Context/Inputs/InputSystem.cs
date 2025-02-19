@@ -17,6 +17,8 @@ namespace Game.Context.Inputs
 
             inputData.MoveDirection.x = Input.GetAxisRaw(HorizontalAxis);
             inputData.MoveDirection.z = Input.GetAxisRaw(VerticalAxis);
+
+            inputData.IsFire = Input.GetKeyDown(KeyCode.Space);
         }
     }
 }

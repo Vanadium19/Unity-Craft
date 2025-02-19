@@ -7,5 +7,6 @@ namespace Game.Context.Inputs
     public struct InputData
     {
         public float3 MoveDirection;
+        public bool IsFire;
     }
 }
